@@ -1,0 +1,86 @@
+<div class="container-fluid bg-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 py-4">
+                <span class="titulo">Cartões de Presente para Jogos</span>
+                <span class="seta float-end"><i class="bi bi-arrow-right"></i></span>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-6 col-md-3 py-2">
+                <center>
+                <div class="grow" onclick="document.location.href = 'search?category_id=2&subcategory_id=31&subcategoryd_id='">
+                    <img src="public/img/home/giftcard/giftCardApple.jpg" />
+                    <p><b>App Store</b></p>
+                </div>
+                </center> 
+            </div>
+            <div class="col-6 col-md-3 py-2">
+                <center>
+                <div class="grow" onclick="document.location.href = 'search?category_id=2&subcategory_id=25&subcategoryd_id='">
+                    <img src="public/img/home/giftcard/giftCardGplay.jpg" />
+                    <p><b>Google Play</b></p>
+                </div>
+                </center>  
+            </div>
+            <div class="col-6 col-md-3 py-2">
+                <center>
+                <div class="grow" onclick="document.location.href = 'search?category_id=2&subcategory_id=30&subcategoryd_id='">
+                    <img src="public/img/home/giftcard/giftCardPlaystation.jpg" />
+                    <p><b>PlayStation</b></p>
+                </div>
+                </center>                  
+            </div>
+            <div class="col-6 col-md-3 py-2">
+                <center>
+                <div class="grow" onclick="document.location.href = 'search?category_id=2&subcategory_id=29&subcategoryd_id='">
+                    <img src="public/img/home/giftcard/giftCardXbox.jpg" />
+                    <p><b>XBox</b></p>
+                </div>
+                </center>  
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-6 col-md-3 py-2">
+                <center>
+                <div class="grow" onclick="document.location.href = 'search?category_id=2&subcategory_id=26&subcategoryd_id='">
+                    <img src="public/img/home/giftcard/giftCardSteam.jpg" />
+                    <p><b>Steam</b></p>
+                </div>
+                </center>  
+            </div>
+            <div class="col-6 col-md-3 py-2">
+                <center>
+                <div class="grow" onclick="document.location.href = 'search?category_id=2&subcategory_id=28&subcategoryd_id='">
+                    <img src="public/img/home/giftcard/giftCardNintendo.jpg" />
+                    <p><b>Nintendo</b></p>
+                </div>
+                </center>                
+            </div>
+            <div class="col-6 col-md-3 py-2">
+                <center>
+                <div class="grow"  onclick="document.location.href = 'search?category_id=2&subcategory_id=24&subcategoryd_id='">
+                    <img src="public/img/home/giftcard/giftCardRoblox.png" />
+                    <p><b>Roblox</b></p>
+                </div>
+                </center> 
+            </div>
+            <div class="col-6 col-md-3 py-2">
+                <center>
+                <div class="grow"  onclick="document.location.href = 'search?category_id=2&subcategory_id=27&subcategoryd_id='">
+                    <img src="public/img/home/giftcard/giftCardRiot.png" />
+                    <p><b>Riot Points</b></p>
+                </div>
+                </center> 
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 py-2 py-5 text-center">
+            <p>Os cartões-presente são uma ótima maneira de economizar em seus jogos ou itens de jogos favoritos. Encontre ótimas ofertas em cartões-presente da Apple, Google Play, PSN, XBox, Steam e muito mais. Você pode facilmente vender seus cartões não utilizados e indesejados por dinheiro</p>
+            <p  onclick="document.location.href = 'search?q=giftcards'"> Ver mais <i class="bi bi-arrow-right-circle"></i> </p>
+            </div>
+        </div>
+    
+    </div>
+</div>    

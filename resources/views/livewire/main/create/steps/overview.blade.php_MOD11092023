@@ -1,0 +1,382 @@
+<?php
+   use Illuminate\Support\Str;
+
+   $uuid = Str::uuid()->toString();
+
+   
+if(!isset($_GET['finished'])){
+
+ 
+
+?>
+<form id="frmCreate" action="resources/views/livewire/main/create/steps/save.blade.php" method="POST" enctype="multipart/form-data">     
+
+
+
+<div class="mb-6 bg-white dark:bg-zinc-800 shadow-sm rounded-md border border-b-0 border-gray-200 dark:border-zinc-700">
+        <!-- FOTOS -->
+        <div class="divisionTitle w-full px-8 py-2">
+            <span class="font-extrabold tracking-wide leading-8 text-black dark:text-white" style="font-size: 1.2rem !important;">
+            Capturas de Tela / Fotos </span>
+        </div>  
+
+        <div class="w-full mb-6 px-8 py-6">
+
+            {{-- Images uploader --}}
+            <div wire:ignore>
+                <span class="mb-2 text-xs font-semibold tracking-wide flex items-center text-gray-700 dark:text-gray-100">{{ __('messages.t_upload_gig_images') }}</span>
+                <x-forms.uploader
+                    model="images"
+                    id="uploader_images"
+                    :extensions="['jpg', 'jpeg', 'png']"
+                    accept="image/jpg, image/jpeg, image/png"
+                    size="{{ settings('publish')->max_image_size }}"
+                    max="{{ settings('publish')->max_images }}" />
+            </div>
+
+        </div>
+
+        <!-- NOME E DESCRIÇAO -->
+        <div class="divisionTitle w-full px-8 py-2">
+            <span class="font-extrabold tracking-wide leading-8 text-black dark:text-white" style="font-size: 1.2rem !important;">
+            Nome e Descrição</span>
+        </div> 
+
+        <div class="w-full mb-6 px-8 py-6">
+
+            {{-- Service title --}}
+            <div class="col-span-12">
+            <input required type="text" placeholder="fazer algo em que sou realmente bom (Max 30 chars)" wire:model.defer="title" 
+            id="text-input-component-id-title" name="text-input-component-id-title" maxlength="30"
+            onfocus="" 
+            class="disabled:cursor-not-allowed focus:!ring-1 block w-full ltr:pr-10 ltr:pl-4 rtl:pl-10 rtl:!pr-4 py-3.5 placeholder:font-normal placeholder:text-[13px] dark:placeholder-zinc-300 text-sm font-medium text-zinc-800 dark:text-white rounded-md dark:bg-transparent focus:!ring-primary-600 focus:!border-primary-600 border-gray-300 dark:border-zinc-500">
+            </div>
+                    
+            {{-- Desciption --}}
+            <div class="col-span-12 mt-2">
+                <textarea maxlength="250" required style="width: 100% !important;" placeholder="Descreva aqui seu item (Max 250 chars)" 
+                class="disabled:cursor-not-allowed focus:!ring-1 block w-full ltr:pr-10 ltr:pl-4 rtl:pl-10 rtl:!pr-4 py-3.5 placeholder:font-normal 
+                placeholder:text-[13px] dark:placeholder-zinc-300 text-sm font-medium text-zinc-800 dark:text-white rounded-md dark:bg-transparent 
+                focus:!ring-primary-600 focus:!border-primary-600 border-gray-300 dark:border-zinc-500"
+                id="textarea-component-id-description" name="textarea-component-id-description"
+                rows="4" cols="50"></textarea>
+            </div>
+
+            <!-- Categoria, subcategoria e subcategoria-->
+            <div class="grid grid-cols-12 md:gap-x-8 gap-y-8 py-6">
+                {{-- Category --}}
+                <div class="col-span-12 md:col-span-6">
+                    <label class="mb-3 block text-xs font-medium {{ $errors->first('category') ? 'text-red-600 dark:text-red-500' : 'text-gray-700 dark:text-gray-200' }}">{{ __('messages.t_choose_parent_category') }}</label>
+                    <div class="min-w-0">
+                        <ul class="max-h-52 flex-auto space-y-1 overflow-y-auto border-2 rounded {{ $errors->first('category') ? 'border-red-500' : 'border-gray-100 dark:border-zinc-700' }}">
+
+                            @foreach ($categories as $cat)
+                                <span wire:click="$set('show', false)">
+                                <li onclick="selecionaCategoria(<?php echo $cat->id; ?>);" wire:click="$set('category', {{ $cat->id }})"  class="group flex cursor-pointer items-center rounded-0 p-2 hover:bg-gray-50 dark:hover:bg-zinc-700 text-gray-900 dark:text-gray-200 {{ $category === $cat->id ? 'bg-gray-50 dark:bg-zinc-700' : '' }}">
+                                    <img src="{{ src($cat->icon) }}" alt="{{ $cat->name }}" class="h-6 w-6 flex-none rounded-full">
+                                    <span class="ltr:ml-3 rtl:mr-3 flex-auto truncate text-xs font-medium">{{ $cat->name }}</span>
+                                    <div wire:loading.remove wire:target="$set('category', {{ $cat->id }})">
+                                        @if ($category === $cat->id)
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="ltr:ml-3 rtl:mr-3 h-4 w-4 flex-none text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"> <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                                        @else
+                                            <svg class="ltr:ml-3 rtl:mr-3 h-4 w-4 flex-none text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"> <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path> </svg>
+                                        @endif 
+                                    </div>
+
+                                    {{-- Loading --}}
+                                    <div wire:loading wire:target="$set('category', {{ $cat->id }})">
+                                        <svg class="animate-spin ltr:-ml-3 rtl:-mr-3 h-4 w-4 flex-none text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"> 
+                                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle> 
+                                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path> 
+                                        </svg>
+                                    </div>
+                                </li>
+                                </span>
+                            @endforeach
+
+                        </ul>
+                    </div>
+                    {{-- Error --}}
+                    @error('category')
+                        <p class="mt-1 text-xs text-red-600 dark:text-red-500">{{ $errors->first('category') }}</p>
+                    @enderror
+                </div>
+            
+                {{-- Subcategory --}}
+                <div class="col-span-12 md:col-span-6">
+
+                    <label class="mb-3 block text-xs font-medium {{ $errors->first('subcategory') ? 'text-red-600 dark:text-red-500' : 'text-gray-700 dark:text-gray-200' }}">{{ __('messages.t_choose_subcategory') }}</label>
+                    <div class="min-w-0">
+                        <ul class="max-h-52 flex-auto space-y-1 overflow-y-auto {{ count($subcategories) ? 'border-2 rounded' : '' }} {{ $errors->first('subcategory') ? 'border-red-500' : 'border-gray-100 dark:border-zinc-700' }}">
+
+                            @foreach ($subcategories as $subcat)
+                                <span wire:click="$set('show', true)">
+                                <li onclick="selecionaSubCategoria(<?php echo $subcat->id; ?>);" wire:click="$set('subcategory', {{ $subcat->id }})" 
+                                class="group flex cursor-pointer items-center rounded-0 p-2 hover:bg-gray-50 dark:hover:bg-zinc-700 text-gray-900 dark:text-gray-200 {{ $subcategory === $subcat->id ? 'bg-gray-50 dark:bg-zinc-700' : '' }}">
+                                    <img src="{{ src($subcat->icon) }}" alt="{{ $subcat->name }}" class="h-6 w-6 flex-none rounded-full">
+                                    <span class="ltr:ml-3 rtl:mr-3 flex-auto truncate text-xs font-medium">{{ $subcat->name }}</span>
+                                    <div wire:loading.remove wire:target="$set('subcategory', {{ $subcat->id }})">
+                                        @if ($subcategory === $subcat->id)
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="ltr:ml-3 rtl:mr-3 h-4 w-4 flex-none text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"> <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                                        @endif
+                                    </div>
+
+                                    {{-- Loading --}}
+                                    <div wire:loading wire:target="$set('subcategory', {{ $subcat->id }})">
+                                        <svg class="animate-spin ltr:-ml-3 rtl:-mr-3 h-4 w-4 flex-none text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"> <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle> <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path> </svg>
+                                    </div>
+                                </li>
+                                </span>
+                            @endforeach
+
+                        </ul>
+                    </div>
+                    {{-- Error --}}
+                    @error('subcategory')
+                        <p class="mt-1 text-xs text-red-600 dark:text-red-500">{{ $errors->first('subcategory') }}</p>
+                    @enderror
+                </div>
+
+
+
+                {{-- Subcategoryd --}}
+                <div class="col-span-12 md:col-span-6">
+
+                    <label class="mb-3 block text-xs font-medium {{ $errors->first('subcategoryd') ? 'text-red-600 dark:text-red-500' : 'text-gray-700 dark:text-gray-200' }}">{{ __('messages.t_choose_subcategory_detail') }}</label>
+                    @if($show)
+                    <div class="min-w-0" id="subcategddiv">
+                        <ul class="max-h-52 flex-auto space-y-1 overflow-y-auto {{ count($subcategoriesd) ? 'border-2 rounded' : '' }} {{ $errors->first('subcategoryd') ? 'border-red-500' : 'border-gray-100 dark:border-zinc-700' }}">
+
+                            @foreach ($subcategoriesd as $subcatd)
+                                <li onclick="selecionaSubCategoriad(<?php echo $subcatd->id; ?>);" wire:click="$set('subcategoryd', {{ $subcatd->id }})" 
+                                class="group flex cursor-pointer items-center rounded-0 p-2 hover:bg-gray-50 dark:hover:bg-zinc-700 text-gray-900 dark:text-gray-200 {{ $subcategoryd === $subcatd->id ? 'bg-gray-50 dark:bg-zinc-700' : '' }}">
+                                    <!--<img src="{{ src($subcatd->icon) }}" alt="{{ $subcatd->name }}" class="h-6 w-6 flex-none rounded-full">-->
+                                    <span class="ltr:ml-3 rtl:mr-3 flex-auto truncate text-xs font-medium">{{ $subcatd->name }}</span>
+                                    <div wire:loading.remove wire:target="$set('subcategoryd', {{ $subcatd->id }})">
+                                        @if ($subcategoryd === $subcatd->id)
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="ltr:ml-3 rtl:mr-3 h-4 w-4 flex-none text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"> 
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                                        @endif
+                                    </div>
+
+                                    {{-- Loading --}}
+                                    <div wire:loading wire:target="$set('subcategoryd', {{ $subcatd->id }})">
+                                        <svg class="animate-spin ltr:-ml-3 rtl:-mr-3 h-4 w-4 flex-none text-gray-400" 
+                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"> 
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle> 
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path> </svg>
+                                    </div>
+                                </li>
+                            @endforeach
+
+                        </ul>
+                    </div>
+                    {{-- Error --}}
+                    @error('subcategoryd')
+                        <p class="mt-1 text-xs text-red-600 dark:text-red-500">{{ $errors->first('subcategoryd') }}</p>
+                    @enderror
+                    @endif
+
+                </div>
+
+
+
+            </div>
+        </div>
+
+        <!-- PREÇOO E ENTREGA -->
+        <div class="divisionTitle w-full px-8 pt-2">
+            <span class="font-extrabold tracking-wide leading-8 text-black dark:text-white" style="font-size: 1.2rem !important;">
+            Preço e entrega</span>
+        </div> 
+
+        <div class="w-full mb-6 px-8">
+            <div class="grid grid-cols-12 md:gap-x-8 gap-y-8 px-8 py-6">
+                {{-- Service price --}}
+                <div class="col-span-12 md:col-span-6">
+                    <div>
+                        <label for="text-input-component-id-price" class="block text-[0.8125rem] font-medium tracking-wide text-gray-700 dark:text-white">Preço</label>
+                        <div class="mt-2 relative">
+                        <input required onInput="mascaraMoeda(event);" onblur="validaMins();" type="text" placeholder="0,00" wire:model.defer="price" 
+                        id="text-input-component-id-price" name="text-input-component-id-price"  
+                        class="money disabled:cursor-not-allowed focus:!ring-1 block w-full ltr:pr-10 ltr:pl-4 
+                        rtl:pl-10 rtl:!pr-4 py-3.5 placeholder:font-normal placeholder:text-[13px] 
+                        dark:placeholder-zinc-300 text-sm font-medium text-zinc-800 dark:text-white 
+                        rounded-md dark:bg-transparent focus:!ring-primary-600 focus:!border-primary-600 border-gray-300 dark:border-zinc-500">
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Delivery time --}}
+                <div class="col-span-12 md:col-span-6">
+                <label for="text-input-component-id-delivery_time" class="block text-[0.8125rem] font-medium tracking-wide text-gray-700 dark:text-white">Prazo de Entrega</label>
+                    <div class="mt-2 relative">
+                        <select  required 
+                        class="disabled:cursor-not-allowed focus:!ring-1 block w-full ltr:pr-10 ltr:pl-4 rtl:pl-10 rtl:!pr-4 py-3.5 placeholder:font-normal placeholder:text-[13px] dark:placeholder-zinc-300 text-sm font-medium text-zinc-800 dark:text-white rounded-md dark:bg-transparent focus:!ring-primary-600 focus:!border-primary-600 border-gray-300 dark:border-zinc-500" 
+                        name="text-input-component-id-delivery_time" id="text-input-component-id-delivery_time">
+                            <option value="1">1 dia</option>
+                            <option value="2">2 dias</option>
+                            <option value="3">3 dias</option>
+                        </select>
+                    </div> 
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Estimativas de custo -->
+        <div class="divisionTitle w-full px-8 py-2">
+            <span class="font-extrabold tracking-wide leading-8 text-black dark:text-white" style="font-size: 1.2rem !important;">
+            Estimativa de taxas e receita</span>
+        </div> 
+
+        <div class="w-full px-8 py-6 row">
+            <div class="col-12">
+            Taxa de transferência digital: R$<span id="ttd">0.00</span> <br>
+            Taxa de comissão: R$<span id="tdc">0.00</span> <br>
+            Você faz: R$<span id="tvf">0.00</span>  <br>
+            </div>
+        </div>
+</div>
+
+{{-- Actions --}}
+<div class="flex justify-between mb-5">
+    <button action="back" text="{{ __('messages.t_back') }}" active="bg-white dark:bg-zinc-700 dark:hover:zinc-800 shadow-sm hover:bg-gray-300 text-gray-900 dark:text-gray-300"  />
+
+    
+    <button wire:click="save" wire:loading.class="bg-gray-200 hover:bg-gray-300 text-gray-500 dark:bg-zinc-600 dark:text-zinc-400 cursor-not-allowed " wire:loading.class.remove="bg-primary-600 hover:bg-primary-700 text-white cursor-pointer" wire:loading.attr="disabled" class=" text-[13px] font-semibold flex justify-center bg-primary-600 hover:bg-primary-700 text-white py-4 px-8 rounded tracking-wide focus:outline-none focus:shadow-outline cursor-pointer">
+
+    
+    <div wire:loading="" wire:target="save">
+        <svg role="status" class="inline w-4 h-4 text-gray-700 animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"></path>
+            <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"></path>
+        </svg>
+    </div>
+
+    
+    <div wire:loading.remove="" wire:target="save">
+        Salvar Item
+    </div>
+ 
+
+</button>
+
+
+</div> 
+
+<input type="hidden" value="<?php echo Auth::id(); ?>" name="user_id" id="user_id" />
+<input type="hidden" value="<?php echo $uuid; ?>" name="uid" id="uid" />
+<input type="text"  name="categoria" id="categoria" style="color: #fff0;background-color: #fff0;border: none;" />
+<input type="text"  name="subcategoria" id="subcategoria" style="color: #fff0;background-color: #fff0;border: none;" />
+<input type="text"  name="subcategoriad" id="subcategoriad" style="color: #fff0;background-color: #fff0;border: none;" />
+</form>
+
+    <!--
+    //MOSTRANDO MENSAGEM PRODUTO SEM DADOS 
+    POR ALTASIS EM 28/07/2023
+    -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function(){
+            <?php 
+            if(isset($_GET['nullOrEmpty'])){
+            ?>
+                ///livewire mostra notificações usando a func abaixo com js
+                window.$wireui.notify({title: '@lang('messages.t_success')', description: '@lang('messages.t_order_has_been_successfully_marked_progress')',icon: 'success'});
+            <?php
+            }
+            ?>
+        });
+
+    </script>
+    <!--<script src="{{url('public/altasis/tempoRestante.js')}}"> </script>-->
+
+
+    <script>
+
+    function mascaraMoeda(event) {
+    const onlyDigits = event.target.value
+        .split("")
+        .filter(s => /\d/.test(s))
+        .join("")
+        .padStart(3, "0")
+    const digitsFloat = onlyDigits.slice(0, -2) + "." + onlyDigits.slice(-2)
+    event.target.value = maskCurrency(digitsFloat)
+    
+    calculaTaxa(digitsFloat);
+
+    }
+
+    function maskCurrency(valor, locale = 'pt-BR', currency = 'BRL') {
+        return new Intl.NumberFormat(locale, {
+            style: 'currency',
+            currency
+        }).format(valor)
+    }
+    
+    function selecionaCategoria(id){
+        $("#categoria").val(id);
+        //$("#frmCreate").append("<input type='text' id='categoria' name='categoria' value='"+id+"'>");
+    }
+
+    function selecionaSubCategoria(id){
+        $("#subcategoria").val(id);
+        //$("#frmCreate").append("<input type='text' id='subcategoria' name='categoria' value='"+id+"'>");
+    }
+
+    function selecionaSubCategoriad(id){
+        $("#subcategoriad").val(id);
+        //$("#frmCreate").append("<input type='text' id='subcategoria' name='categoria' value='"+id+"'>");
+    }
+
+
+
+    function calculaTaxa(valor){
+
+        //var valor = $("#text-input-component-id-price").val();
+       // console.log("Valor para calc taxa:".valor);
+
+        var valortransf = 0.10 * parseFloat(valor);
+        var valorcomissao = valortransf;
+        var valorfinal = parseFloat(valor) - parseFloat(valortransf);
+
+        $("#ttd").html(Math.round(valortransf));
+        $("#tdc").html(Math.round(valorcomissao));
+        $("#tvf").html(Math.round(valorfinal));
+
+        //console.log("Valor valortransf:".valortransf);
+        //console.log("Valor valorcomissao:".valorcomissao);
+        //console.log("Valor valorfinal:".valorfinal);
+    }
+
+    function validaMins(){
+        var valor = $("#text-input-component-id-price").val();
+        var result = valor.slice(2);
+        result = result.replace(".", "");
+        result = result.replace(",", ".");
+
+        //result = parseFloat(result);
+        var min = parseFloat('0.10');
+        var max = parseFloat('10000.01');
+
+        if(result < min){
+            alert("Valor menor que o permitido.");
+            $("#text-input-component-id-price").val('');
+        }
+        
+        if(result > max){
+            alert("Valor maior que o permitido.");
+            $("#text-input-component-id-price").val('');
+        }
+
+        console.log("result: "+result);
+        console.log("max: "+max);
+        console.log("min: "+min);
+
+    }
+</script>
+
+
+<?php
+}
+?>

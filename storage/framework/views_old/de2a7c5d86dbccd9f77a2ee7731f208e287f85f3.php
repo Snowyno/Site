@@ -1,0 +1,1 @@
+<?php /**PATH /home/u991810173/domains/universalgamer.shop/public_html/resources/views//livewire/main/documents/terms.blade.php ENDPATH**/ ?>

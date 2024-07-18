@@ -1,0 +1,128 @@
+<div class="container-fluid" style="background-color: #f8f9fa !important;">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 py-3">
+                <span class="titulo">Jogos em Alta</span>
+                <span class="seta float-end"><i class="bi bi-arrow-right"></i></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 col-md-1 py-2">
+                <div class="image-container" onclick="document.location.href = 'search?q=Jedi+Survivor'">
+                    <img src="public/img/home/high/jogo_jedi.png" class="img-fluid">
+
+                    <div class="image-caption">
+                        <p>Jedi<br>Survivor</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-1 py-2">
+                <div class="image-container" onclick="document.location.href = 'search?q=Dead+Island+2'">
+                    <img src="public/img/home/high/jogo_deadisland2.png" class="img-fluid">
+
+                    <div class="image-caption">
+                        <p>Dead<br>Island 2</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-1 py-2">
+                <div class="image-container" onclick="document.location.href = 'search?q=Resident+Evil+5'">
+                    <img src="public/img/home/high/jogo_resident5.png" class="img-fluid">
+
+                    <div class="image-caption">
+                        <p>Resident<br>Evil 5</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-1 py-2">
+                <div class="image-container" onclick="document.location.href = 'search?q=Redfall'">
+                    <img src="public/img/home/high/jogo_redfall.png" class="img-fluid">
+
+                    <div class="image-caption">
+                        <p>Redfall</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-1 py-2">
+                <div class="image-container" onclick="document.location.href = 'search?q=Destiny+Lightfall'">
+                    <img src="public/img/home/high/jogo_destiny.png" class="img-fluid">
+
+                    <div class="image-caption">
+                        <p>Destiny<br>Lightfall</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-1 py-2">
+                <div class="image-container" onclick="document.location.href = 'search?q=Hogwarts+Legacy'">
+                    <img src="public/img/home/high/jogo_hogwarts.png" class="img-fluid">
+
+                    <div class="image-caption">
+                        <p>Hogwarts<br>Legacy</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-1 py-2">
+                <div class="image-container" onclick="document.location.href = 'search?q=Jedi+Survivor'">
+                    <img src="public/img/home/high/jogo_jedi.png" class="img-fluid">
+
+                    <div class="image-caption">
+                        <p>Jedi<br>Survivor</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-1 py-2">
+                <div class="image-container"  onclick="document.location.href = 'search?q=Jedi+Island+2'">
+                    <img src="public/img/home/high/jogo_deadisland2.png" class="img-fluid">
+
+                    <div class="image-caption">
+                        <p>Dead<br>Island 2</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-1 py-2">
+                <div class="image-container" onclick="document.location.href = 'search?q=Resident+Evil+5'">
+                    <img src="public/img/home/high/jogo_resident5.png" class="img-fluid">
+
+                    <div class="image-caption">
+                        <p>Resident<br>Evil 5</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-1 py-2">
+                <div class="image-container">
+                    <img src="public/img/home/high/jogo_redfall.png" class="img-fluid">
+
+                    <div class="image-caption">
+                        <p>Redfall</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-1 py-2">
+                <div class="image-container" onclick="document.location.href = 'search?q=Jedi+Island+2'">
+                    <img src="public/img/home/high/jogo_deadisland2.png" class="img-fluid">
+
+                    <div class="image-caption">
+                        <p>Dead<br>Island 2</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-1 py-2">
+                <div class="image-container" onclick="document.location.href = 'search?q=Resident+Evil+5'">
+                    <img src="public/img/home/high/jogo_resident5.png" class="img-fluid">
+
+                    <div class="image-caption">
+                        <p>Resident<br>Evil 5</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 py-5 text-center">
+            <p>Ache ofertas para os jogos mais novos e populares em todas as plataformas disponíveis.</p>
+            <p onclick="document.location.href = 'search?q=Jogos'"> Ver mais <i class="bi bi-arrow-right-circle"></i> </p>
+            </div>
+        </div>
+    
+    </div>
+</div>    
